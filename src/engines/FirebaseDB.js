@@ -5,7 +5,7 @@ export default class Database {
 		console.log('Initializing connection with configs', configs);
 		firebase.initializeApp(configs)
 		this.db = firebase.firestore();
-		console.log('Database is not initialized', this.db);
+		console.log('Database is now initialized', this.db);
 	}
 
 	post(data) {
@@ -43,12 +43,17 @@ export default class Database {
 	}
 
 	list() {
-		return new Promise((resolve, reject) => {
-			let data = this.db;
-
-			this._mockDelay().then(() => {
-				resolve(data)
+		return this.db.collection('test').get().then(collection => {
+			let docs = collection.docs.map(doc => {
+				let id = doc.id;
+				let data = doc.data();
+				return {
+					...data,
+					id,
+				}
 			});
+			console.log('Got collection', docs);
+			return Promise.resolve(docs);
 		});
 	}
 
