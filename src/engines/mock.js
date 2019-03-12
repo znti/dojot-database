@@ -3,6 +3,10 @@ export default class Database {
 		this.db = [];
 	}
 
+	listen(callback) {
+		this.listener = callback;
+	}
+
 	post(data) {
 		return new Promise((resolve, reject) => {
 			let id = '' + Object.keys(this.db).length;
@@ -13,6 +17,7 @@ export default class Database {
 			this.db[id] = newEntry;
 
 			this._mockDelay().then(() => {
+				typeof(this.listener) === 'function' && this.listener(newEntry);
 				resolve(id)
 			});
 		});

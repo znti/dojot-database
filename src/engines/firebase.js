@@ -8,18 +8,40 @@ export default class Database {
 		console.log('Database is now initialized', this.db);
 	}
 
+	listen(callback) {
+		console.log('Setting a listener');
+		this.db.collection('test').onSnapshot(snapshot => {
+			console.log('Got snapshot', snapshot);
+			snapshot.docChanges().forEach(function(change) {
+					if (change.type === "added") {
+							let doc = change.doc;
+							let data = doc.data();
+							console.log("New: ", data);
+							callback({...data, _id: doc.id});
+					}
+					if (change.type === "modified") {
+							console.log("Modified: ", change.doc.data());
+					}
+					if (change.type === "removed") {
+							console.log("Removed: ", change.doc.data());
+					}
+			});
+		});
+	}
+
 	post(data) {
 		let parsedData;
 
+		console.log('Parsing', data);
+
 		try {
-			parsedData = JSON.parse(data);
+			parsedData = JSON.parse(JSON.stringify(data));
 		} catch(e) {
 			console.log('Beep!', e);
 			parsedData = {message: 'failed!'};
 		}
 
 		let docRef = this.db.collection('test').doc();
-		console.log('REFREFERFEREFE', docRef);
 		let docId = docRef.id;
 		console.log('Setting data', parsedData, 'under ID', docId);
 

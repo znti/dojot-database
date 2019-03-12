@@ -1,5 +1,5 @@
-import MockDB from './engines/MockDB';
-import FirebaseDB from './engines/FirebaseDB';
+import Mock from './engines/mock';
+import Firebase from './engines/firebase';
 
 export default class Database {
 	constructor(configs) {
@@ -12,18 +12,22 @@ export default class Database {
 		switch(dbEngineName) {
 			case 'firebase':
 				console.log('Initializing with firebase');
-				dbEngine = new FirebaseDB(configs.configs);
+				dbEngine = new Firebase(configs.configs);
 				break;
 
 			default:
 				console.log('Initializing with mockdb');
-				dbEngine = new MockDB();
+				dbEngine = new Mock();
 				break;
 		}
 
 		this.db = dbEngine;
 		console.log('Loaded engine:', this.db);
 
+	}
+
+	listen(callback) {
+		this.db.listen(callback);
 	}
 
 	post(data) {
