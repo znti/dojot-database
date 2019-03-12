@@ -17,7 +17,7 @@ export default class Database {
 							let doc = change.doc;
 							let data = doc.data();
 							console.log("New: ", data);
-							callback({...data, _id: doc.id});
+							callback({...data, id: doc.id});
 					}
 					if (change.type === "modified") {
 							console.log("Modified: ", change.doc.data());
