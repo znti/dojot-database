@@ -9,10 +9,10 @@ export default class Database {
 
 	post(data) {
 		return new Promise((resolve, reject) => {
-			let id = '' + Object.keys(this.db).length;
+			let id = 'id' + Object.keys(this.db).length;
 			let newEntry = {
+				...data,
 				id,
-				data,
 			}
 			this.db[id] = newEntry;
 
