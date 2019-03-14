@@ -3,7 +3,12 @@ import firebase from 'firebase';
 export default class Database {
 	constructor(configs) {
 		console.log('Initializing connection with configs', configs);
-		firebase.initializeApp(configs)
+		if(firebase.apps.length > 0) {
+			console.log('Firebase is already initialized');
+		} else {
+			console.log('Initializing firebase client');
+			firebase.initializeApp(configs);
+		}
 		this.db = firebase.firestore();
 		console.log('Database is now initialized', this.db);
 	}
