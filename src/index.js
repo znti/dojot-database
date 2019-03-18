@@ -19,6 +19,10 @@ export default class Database {
 		return this.db.list();
 	}
 
+	generateId() {
+		return this.db.generateId();
+	}
+
 	constructor(configs) {
 
 		console.log('Initializing database with configs:', configs);

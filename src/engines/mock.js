@@ -9,7 +9,7 @@ export default class Database {
 
 	post(data) {
 		return new Promise((resolve, reject) => {
-			let id = 'id' + Object.keys(this.db).length;
+			let id = 'id' + this.db.length;
 			let newEntry = {
 				...data,
 				id,
@@ -31,6 +31,10 @@ export default class Database {
 				resolve(data)
 			});
 		});
+	}
+
+	generateId() {
+		return this.db.length;
 	}
 
 	list() {

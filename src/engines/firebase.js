@@ -69,6 +69,14 @@ export default class Database {
 		});
 	}
 
+	generateId() {
+		console.log('Generating a new ID');
+		let docRef = this.db.collection('_none_').doc();
+		let docId = docRef.id;
+
+		return Promise.resolve(docId);
+	}
+
 	list() {
 		return this.db.collection('test').get().then(collection => {
 			let docs = collection.docs.map(doc => {
