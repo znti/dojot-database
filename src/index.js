@@ -7,12 +7,20 @@ export default class Database {
 		this.db.listen(callback);
 	}
 
+	get(id) {
+		return this.db.get(id);
+	}
+
 	post(data) {
 		return this.db.post(data);
 	}
 
-	get(id) {
-		return this.db.get(id);
+	put(id, data) {
+		return this.db.put(id, data);
+	}
+
+	delete(id) {
+		return this.db.delete(id);
 	}
 
 	list() {

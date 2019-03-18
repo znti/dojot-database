@@ -55,6 +55,27 @@ export default class Database {
 		});
 	}
 
+	put(id, data) {
+		let parsedData;
+
+		console.log('Parsing', data);
+
+		try {
+			parsedData = JSON.parse(JSON.stringify(data));
+		} catch(e) {
+			console.log('Beep!', e);
+			return Promise.reject(e);
+		}
+
+		let docRef = this.db.collection('test').doc(id);
+		let docId = docRef.id;
+		console.log('Setting data', parsedData, 'under ID', docId);
+
+		return docRef.set(parsedData).then(() => {
+			return Promise.resolve(docId);
+		});
+	}
+
 	get(id) {
 		console.log('Loading document', id);
 		return this.db.collection('test').doc(id).get().then(doc => {
