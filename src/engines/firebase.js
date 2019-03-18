@@ -43,7 +43,7 @@ export default class Database {
 			parsedData = JSON.parse(JSON.stringify(data));
 		} catch(e) {
 			console.log('Beep!', e);
-			parsedData = {message: 'failed!'};
+			return Promise.reject(e);
 		}
 
 		let docRef = this.db.collection('test').doc();
@@ -64,7 +64,7 @@ export default class Database {
 				console.log('It exists:', docData); 
 				return Promise.resolve(docData);
 			} else {
-				return Promise.resolve('none');
+				return Promise.resolve();
 			}
 		});
 	}
