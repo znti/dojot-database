@@ -3,11 +3,11 @@ export default class Database {
 		this.db = [];
 	}
 
-	listen(callback) {
+	listen(collection, callback) {
 		this.listener = callback;
 	}
 
-	post(data) {
+	post(collection, data) {
 		return new Promise((resolve, reject) => {
 			let id = 'id' + this.db.length;
 			let newEntry = {
@@ -23,7 +23,7 @@ export default class Database {
 		});
 	}
 
-	get(id) {
+	get(collection, id) {
 		return new Promise((resolve, reject) => {
 			let data = this.db.find(entry => entry.id === id);
 
@@ -37,7 +37,7 @@ export default class Database {
 		return this.db.length;
 	}
 
-	list() {
+	list(collection) {
 		return new Promise((resolve, reject) => {
 			let data = this.db;
 

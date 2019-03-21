@@ -13,9 +13,9 @@ export default class Database {
 		console.log('Database is now initialized', this.db);
 	}
 
-	listen(callback) {
+	listen(collection, callback) {
 		console.log('Setting a listener');
-		this.db.collection('test').onSnapshot(snapshot => {
+		this.db.collection(collection).onSnapshot(snapshot => {
 			console.log('Got snapshot', snapshot);
 			snapshot.docChanges().forEach(function(change) {
 					if (change.type === "added") {
@@ -34,7 +34,7 @@ export default class Database {
 		});
 	}
 
-	post(data) {
+	post(collection, data) {
 		let parsedData;
 
 		console.log('Parsing', data);
@@ -46,7 +46,7 @@ export default class Database {
 			return Promise.reject(e);
 		}
 
-		let docRef = this.db.collection('test').doc();
+		let docRef = this.db.collection(collection).doc();
 		let docId = docRef.id;
 		console.log('Setting data', parsedData, 'under ID', docId);
 
@@ -55,7 +55,7 @@ export default class Database {
 		});
 	}
 
-	put(id, data) {
+	put(collection, id, data) {
 		let parsedData;
 
 		console.log('Parsing', data);
@@ -67,7 +67,7 @@ export default class Database {
 			return Promise.reject(e);
 		}
 
-		let docRef = this.db.collection('test').doc(id);
+		let docRef = this.db.collection(collection).doc(id);
 		let docId = docRef.id;
 		console.log('Setting data', parsedData, 'under ID', docId);
 
@@ -76,9 +76,9 @@ export default class Database {
 		});
 	}
 
-	get(id) {
+	get(collection, id) {
 		console.log('Loading document', id);
-		return this.db.collection('test').doc(id).get().then(doc => {
+		return this.db.collection(collection).doc(id).get().then(doc => {
 			console.log('Got', doc);
 			if(doc.exists) {
 				let docData = doc.data();
@@ -90,9 +90,10 @@ export default class Database {
 		});
 	}
 
-	generateId() {
-		console.log('Generating a new ID');
-		let docRef = this.db.collection('_none_').doc();
+	generateId(collection) {
+		collection = collection || '_none_';
+		console.log('Generating a new ID on collection', collection);
+		let docRef = this.db.collection(collection).doc();
 		let docId = docRef.id;
 
 		return Promise.resolve(docId);

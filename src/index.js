@@ -7,27 +7,27 @@ export default class Database {
 		this.db.listen(callback);
 	}
 
-	get(id) {
+	get(collection, id) {
 		return this.db.get(id);
 	}
 
-	post(data) {
+	post(collection, data) {
 		return this.db.post(data);
 	}
 
-	put(id, data) {
+	put(collection, id, data) {
 		return this.db.put(id, data);
 	}
 
-	delete(id) {
+	delete(collection, id) {
 		return this.db.delete(id);
 	}
 
-	list() {
+	list(collection) {
 		return this.db.list();
 	}
 
-	generateId() {
+	generateId(collection) {
 		return this.db.generateId();
 	}
 
