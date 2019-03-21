@@ -3,32 +3,97 @@ import Firebase from './engines/firebase';
 
 export default class Database {
 
-	listen(callback) {
-		this.db.listen(callback);
+	listen(collection, callback) {
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+		
+		if(!callback || typeof(callback) !== 'function') {
+			console.log(`The 'callback' parameter expects a function. Got %{typeof(callback)}`);
+			return;
+		}
+
+		return this.db.listen(collection, callback);
 	}
 
 	get(collection, id) {
-		return this.db.get(id);
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+		
+		if(!id || typeof(id) !== 'string') {
+			console.log(`The 'id' parameter expects a string. Got %{typeof(id)}`);
+			return;
+		}
+		
+		return this.db.get(collection, id);
 	}
 
 	post(collection, data) {
-		return this.db.post(data);
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+		
+		if(!data || typeof(data) !== 'object') {
+			console.log(`The 'data' parameter expects an object. Got %{typeof(data)}`);
+			return;
+		}
+		
+		return this.db.post(collection, data);
 	}
 
 	put(collection, id, data) {
-		return this.db.put(id, data);
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+		
+		if(!id || typeof(id) !== 'string') {
+			console.log(`The 'id' parameter expects a string. Got %{typeof(id)}`);
+			return;
+		}
+		
+		if(!data || typeof(data) !== 'object') {
+			console.log(`The 'data' parameter expects an object. Got %{typeof(data)}`);
+			return;
+		}
+		
+		return this.db.put(collection, id, data);
 	}
 
 	delete(collection, id) {
-		return this.db.delete(id);
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+		
+		if(!id || typeof(id) !== 'string') {
+			console.log(`The 'id' parameter expects a string. Got %{typeof(id)}`);
+			return;
+		}
+		
+		return this.db.delete(collection, id);
 	}
 
 	list(collection) {
-		return this.db.list();
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+
+		return this.db.list(collection);
 	}
 
 	generateId(collection) {
-		return this.db.generateId();
+		if(!collection || typeof(collection) !== 'string') {
+			console.log(`The 'collection' parameter expects a string. Got %{typeof(collection)}`);
+			return;
+		}
+
+		return this.db.generateId(collection);
 	}
 
 	constructor(configs) {
