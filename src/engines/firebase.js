@@ -18,17 +18,19 @@ export default class Database {
 		this.db.collection(collection).onSnapshot(snapshot => {
 			console.log('Got snapshot', snapshot);
 			snapshot.docChanges().forEach(function(change) {
+					let doc = change.doc;
+					let data = doc.data();
 					if (change.type === "added") {
-							let doc = change.doc;
-							let data = doc.data();
 							console.log("New: ", data);
-							callback({...data, id: doc.id});
+							callback( {type: 'added', payload: {...data, id: doc.id}} );
 					}
 					if (change.type === "modified") {
 							console.log("Modified: ", change.doc.data());
+							callback( {type: 'modified', payload: {...data, id: doc.id}} );
 					}
 					if (change.type === "removed") {
 							console.log("Removed: ", change.doc.data());
+							callback( {type: 'removed', payload: {...data, id: doc.id}} );
 					}
 			});
 		});
